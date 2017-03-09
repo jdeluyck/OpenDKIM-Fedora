@@ -18,7 +18,7 @@ Patch0: %{name}.ticket35+37.patch
 
 # Required for all versions
 Requires: lib%{name}%{?_isa} = %{version}-%{release}
-BuildRequires: openssl-devel, libtool, pkgconfig, libbsd, libbsd-devel, opendbx-devel
+BuildRequires: openssl-devel, libtool, pkgconfig, libbsd, libbsd-devel, opendbx-devel, lua-devel
 Requires(pre): shadow-utils
 
 %if %systemd
@@ -83,10 +83,10 @@ required for developing applications against libopendkim.
 
 %if %systemd
 # Configure with options available to systemd
-%configure --with-odbx --with-db --with-libmemcached --with-openldap --enable-query_cache
+%configure --with-odbx --with-db --with-libmemcached --with-openldap --enable-query_cache --with-lua
 %else
 # Configure with options available to SysV
-%configure --with-odbx --with-db --with-openldap --enable-query_cache
+%configure --with-odbx --with-db --with-openldap --enable-query_cache --with-lua
 %endif
 
 # Remove rpath
@@ -493,6 +493,7 @@ rm -rf %{buildroot}
 %config(noreplace) %attr(0640,%{name},%{name}) %{_sysconfdir}/%{name}/KeyTable
 %config(noreplace) %attr(0640,%{name},%{name}) %{_sysconfdir}/%{name}/TrustedHosts
 %config(noreplace) %{_sysconfdir}/sysconfig/%{name}
+%{_bindir}/*
 %{_sbindir}/*
 %{_mandir}/*/*
 %dir %attr(-,%{name},%{name}) %{_localstatedir}/spool/%{name}
